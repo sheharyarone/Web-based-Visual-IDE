@@ -1,6 +1,9 @@
 // Regex pattern for a valid PHP variable name
 var validVariableName = /^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/;
 
+// Array to store defined variable names
+var definedVariableNames = [];
+
 // Function to validate a variable name
 function isValidVariableName(name) {
   return validVariableName.test(name);
@@ -30,21 +33,56 @@ generatedCode.addEventListener("drop", function (e) {
         alert("Invalid variable name! Please try again.");
         variableName = prompt("Enter variable name:");
       }
-      codeToAdd = "$" + variableName + ";";
+      definedVariableNames.push(variableName);
+      var variableValue = prompt("Enter variable value:");
+      codeToAdd = "$" + variableName + " = '" + variableValue + "';";
       break;
+
     case "Arithmetic operations":
       var variableName = prompt("Enter variable name to store result:");
       while (!isValidVariableName(variableName)) {
         alert("Invalid variable name! Please try again.");
         variableName = prompt("Enter variable name to store result:");
       }
-      var operation = prompt("Enter arithmetic operation (+, -, *, /):");
-      var leftSide = prompt(
+      var operation = prompt("Enter arithmetic operation (+, -, *, /, %):");
+      while (!["+", "-", "*", "/", "%"].includes(operation)) {
+        alert("Invalid arithmetic operation! Please try again.");
+        operation = prompt("Enter arithmetic operation (+, -, *, /, %):");
+      }
+      var leftSide1 = prompt(
         "Enter left side of operation (variable name or number):"
       );
-      codeToAdd =
-        "$" + variableName + " = " + leftSide + " " + operation + " ;";
+      var leftSide2 = prompt(
+        "Enter another left side of operation (variable name or number):"
+      );
+
+      // Check if variable names on the right side are valid
+      var validRightSide = true;
+      [leftSide1, leftSide2].forEach(function (rightSide) {
+        if (isNaN(rightSide) && !definedVariableNames.includes(rightSide)) {
+          validRightSide = false;
+        }
+      });
+
+      if (validRightSide) {
+        codeToAdd =
+          "$" +
+          variableName +
+          " = " +
+          leftSide1 +
+          " " +
+          operation +
+          " " +
+          leftSide2 +
+          " ;";
+      } else {
+        alert(
+          "Invalid arithmetic operation! Variable names on the right side must be defined first."
+        );
+      }
+
       break;
+
     case "Function creation":
       var functionName = prompt("Enter function name:");
       while (!isValidVariableName(functionName)) {
