@@ -10,11 +10,11 @@
 	<div class="snippet-container">
 		<div class="snippet-header">Code Snippets</div>
 		<div class="snippet-group">
-			<div class="snippet-item" draggable="true">Define variables</div>
-			<div class="snippet-item" draggable="true">Arithmetic operations</div>
-			<div class="snippet-item" draggable="true">Function creation</div>
-			<div class="snippet-item" draggable="true">Loops</div>
-			<div class="snippet-item" draggable="true">Conditional statements</div>
+			<div class="snippet-item" draggable="true" data-operation="variables">Define variables</div>
+			<div class="snippet-item" draggable="true" data-operation="arithmetic">Arithmetic operations</div>
+			<div class="snippet-item" draggable="true" data-operation="functions">Function creation</div>
+			<div class="snippet-item" draggable="true" data-operation="loops">Loops</div>
+			<div class="snippet-item" draggable="true" data-operation="conditionals">Conditional statements</div>
 		</div>
 	</div>
 

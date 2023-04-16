@@ -1,3 +1,11 @@
+// Regex pattern for a valid PHP variable name
+var validVariableName = /^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/;
+
+// Function to validate a variable name
+function isValidVariableName(name) {
+  return validVariableName.test(name);
+}
+
 var dragItem = document.querySelectorAll(".snippet-item");
 var generatedCode = document.getElementById("generated-code");
 
@@ -18,75 +26,57 @@ generatedCode.addEventListener("drop", function (e) {
   switch (data) {
     case "Define variables":
       var variableName = prompt("Enter variable name:");
-      if (variableName) {
-        codeToAdd = "$" + variableName + ";";
+      while (!isValidVariableName(variableName)) {
+        alert("Invalid variable name! Please try again.");
+        variableName = prompt("Enter variable name:");
       }
+      codeToAdd = "$" + variableName + ";";
       break;
     case "Arithmetic operations":
-      // Display dropdown menu for arithmetic operations
-      var operation = prompt(
-        "Choose an arithmetic operation: \n1. Addition \n2. Subtraction \n3. Multiplication \n4. Division"
-      );
       var variableName = prompt("Enter variable name to store result:");
-      var leftSide = prompt(
-        "Enter left side value (numeric or variable name):"
-      );
-
-      // Generate code based on selected operation
-      switch (operation) {
-        case "1":
-          codeToAdd = "$" + variableName + " = " + leftSide + " + $value;";
-          break;
-        case "2":
-          codeToAdd = "$" + variableName + " = " + leftSide + " - $value;";
-          break;
-        case "3":
-          codeToAdd = "$" + variableName + " = " + leftSide + " * $value;";
-          break;
-        case "4":
-          codeToAdd = "$" + variableName + " = " + leftSide + " / $value;";
-          break;
-        default:
-          codeToAdd = "";
-          break;
+      while (!isValidVariableName(variableName)) {
+        alert("Invalid variable name! Please try again.");
+        variableName = prompt("Enter variable name to store result:");
       }
+      var operation = prompt("Enter arithmetic operation (+, -, *, /):");
+      var leftSide = prompt(
+        "Enter left side of operation (variable name or number):"
+      );
+      codeToAdd =
+        "$" + variableName + " = " + leftSide + " " + operation + " ;";
       break;
     case "Function creation":
       var functionName = prompt("Enter function name:");
-      if (functionName) {
-        var param1 = prompt("Enter parameter 1 name:");
-        var param2 = prompt("Enter parameter 2 name:");
-        codeToAdd =
-          "function " +
-          functionName +
-          "($" +
-          param1 +
-          ", $" +
-          param2 +
-          ") {\n\t// Code here\n}";
+      while (!isValidVariableName(functionName)) {
+        alert("Invalid function name! Please try again.");
+        functionName = prompt("Enter function name:");
       }
+      var params = prompt("Enter comma-separated list of parameters:");
+      codeToAdd =
+        "function " + functionName + "(" + params + ") {\n\t// Code here\n}";
       break;
     case "Loops":
-      var loopVarName = prompt("Enter loop variable name:");
-      if (loopVarName) {
-        codeToAdd =
-          "for ($" +
-          loopVarName +
-          " = 0; $" +
-          loopVarName +
-          " < 10; $" +
-          loopVarName +
-          "++) {\n\t// Code here\n}";
+      var loopVar = prompt("Enter loop variable name:");
+      while (!isValidVariableName(loopVar)) {
+        alert("Invalid variable name! Please try again.");
+        loopVar = prompt("Enter loop variable name:");
       }
+      var loopLimit = prompt("Enter loop limit:");
+      codeToAdd =
+        "for ($" +
+        loopVar +
+        " = 0; $" +
+        loopVar +
+        " < " +
+        loopLimit +
+        "; $" +
+        loopVar +
+        "++) {\n\t// Code here\n}";
       break;
     case "Conditional statements":
-      var conditionVarName = prompt("Enter condition variable name:");
-      if (conditionVarName) {
-        codeToAdd =
-          "if ($" +
-          conditionVarName +
-          ") {\n\t// Code here\n} else {\n\t// Code here\n}";
-      }
+      var condition = prompt("Enter condition:");
+      codeToAdd =
+        "if (" + condition + ") {\n\t// Code here\n} else {\n\t// Code here\n}";
       break;
     default:
       codeToAdd = "";
