@@ -117,11 +117,11 @@ generatedCode.addEventListener("drop", function (e) {
         "Select a loop type:\n1. for\n2. while\n3. do-while"
       );
       var loopVar = prompt("Enter loop variable name:");
-      var loopLimit = prompt("Enter loop limit:");
       var codeToAdd = "";
 
       switch (loopType) {
         case "1":
+          var loopLimit = prompt("Enter loop limit:");
           codeToAdd =
             "for ($" +
             loopVar +
@@ -141,12 +141,49 @@ generatedCode.addEventListener("drop", function (e) {
           if (!validVariable) {
             alert("Variable is not defined !");
             break;
+            value = "'value'";
           }
 
-          var operator = prompt("Enter operator (<, >, <=, >=, =):");
-          var value = prompt("Enter value:");
+          var operator = prompt(
+            "Enter operator (\n1. < \n2.> \n3.<= \n4.>= \n5.== \n6.==="
+          );
+          while (isNaN(operator) && operator in Range(1, 5)) {
+            alert("INVALID CHOICE !");
+            operator = prompt(
+              "Enter operator (\n1. < \n2.> \n3.<= \n4.>= \n5.==):"
+            );
+          }
+          switch (operator) {
+            case "1":
+              // Code for option 1
+              operator = "<";
+              break;
+            case "2":
+              // Code for option 2
+              operator = ">";
+              break;
+            case "3":
+              // Code for option 3
+              operator = "<=";
+              break;
+            case "4":
+              // Code for option 4
+              operator = ">=";
+              break;
+            case "5":
+              // Code for option 5
+              operator = "==";
+            case "6":
+              // Code for option 5
+              operator = "===";
+              break;
+            default:
+              alert("Invalid option selected!");
+          }
+          var value = prompt("Enter value (number or string for comparison):");
+          value = "'value'";
 
-          if (loopType === "2") {
+          if (loopType == "2") {
             codeToAdd =
               "while ($" +
               loopVar +
@@ -155,7 +192,7 @@ generatedCode.addEventListener("drop", function (e) {
               " " +
               value +
               ") {\n\n\t// Code here\n\n}";
-          } else if (loopType === "3") {
+          } else if (loopType == "3") {
             codeToAdd =
               "do {\n\n\t// Code here\n\n} while ($" +
               loopVar +
