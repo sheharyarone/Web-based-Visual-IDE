@@ -89,36 +89,110 @@ generatedCode.addEventListener("drop", function (e) {
         alert("Invalid function name! Please try again.");
         functionName = prompt("Enter function name:");
       }
-      var params = prompt("Enter comma-separated list of parameters:");
-      codeToAdd =
+      var numParams;
+      do {
+        var input = prompt(
+          "How many parameters do you want to pass to the function?"
+        );
+        numParams = parseInt(input);
+      } while (isNaN(numParams) || input !== numParams.toString());
+      var params = "";
+      for (var i = 0; i < numParams; i++) {
+        var paramName = prompt("Enter name for parameter " + (i + 1) + ":");
+        while (!isValidVariableName(paramName)) {
+          alert("Invalid parameter name! Please try again.");
+          paramName = prompt("Enter name for parameter " + (i + 1) + ":");
+        }
+        params += paramName;
+        if (i < numParams - 1) {
+          params += ", ";
+        }
+      }
+      var codeToAdd =
         "function " + functionName + "(" + params + ") {\n\t// Code here\n}";
       break;
+
     case "Loops":
+      var loopType = prompt(
+        "Select a loop type:\n1. for\n2. while\n3. do-while"
+      );
       var loopVar = prompt("Enter loop variable name:");
-      while (!isValidVariableName(loopVar)) {
-        alert("Invalid variable name! Please try again.");
-        loopVar = prompt("Enter loop variable name:");
-      }
       var loopLimit = prompt("Enter loop limit:");
-      codeToAdd =
-        "for ($" +
-        loopVar +
-        " = 0; $" +
-        loopVar +
-        " < " +
-        loopLimit +
-        "; $" +
-        loopVar +
-        "++) {\n\t// Code here\n}";
+      var codeToAdd = "";
+
+      switch (loopType) {
+        case "1":
+          codeToAdd =
+            "for ($" +
+            loopVar +
+            " = 0; $" +
+            loopVar +
+            " < " +
+            loopLimit +
+            "; $" +
+            loopVar +
+            "++) {\n\n\t// Code here\n\n}";
+          break;
+
+        case "2":
+        case "3":
+          var validVariable = false;
+          var validVariable = definedVariableNames.includes(loopVar);
+          if (!validVariable) {
+            alert("Variable is not defined !");
+            break;
+          }
+
+          var operator = prompt("Enter operator (<, >, <=, >=, =):");
+          var value = prompt("Enter value:");
+
+          if (loopType === "2") {
+            codeToAdd =
+              "while ($" +
+              loopVar +
+              " " +
+              operator +
+              " " +
+              value +
+              ") {\n\n\t// Code here\n\n}";
+          } else if (loopType === "3") {
+            codeToAdd =
+              "do {\n\n\t// Code here\n\n} while ($" +
+              loopVar +
+              " " +
+              operator +
+              " " +
+              value +
+              ");";
+          }
+          break;
+
+        default:
+          alert("Invalid loop type selected!");
+      }
       break;
+
     case "Conditional statements":
       var condition = prompt("Enter condition:");
       codeToAdd =
-        "if (" + condition + ") {\n\t// Code here\n} else {\n\t// Code here\n}";
+        "if (" +
+        condition +
+        ") {\n\t// Code here\n\n} else {\n\t// Code here\n\n}";
       break;
     default:
       codeToAdd = "";
       break;
   }
-  generatedCode.value += codeToAdd + "\n";
+  codeToAdd = "\n" + codeToAdd + "\n";
+
+  // Determine where in the generated code block the user dropped the code snippet
+  var caretPosition = generatedCode.selectionStart;
+
+  // Insert the new code snippet at the caret position
+  var currentValue = generatedCode.value;
+  var newValue =
+    currentValue.slice(0, caretPosition) +
+    codeToAdd +
+    currentValue.slice(caretPosition);
+  generatedCode.value = newValue;
 });
