@@ -3,6 +3,7 @@ var validVariableName = /^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/;
 
 // Array to store defined variable names
 var definedVariableNames = [];
+var definedFuncNames = [];
 
 // Function to validate a variable name
 function isValidVariableName(name) {
@@ -25,6 +26,7 @@ generatedCode.addEventListener("dragover", function (e) {
 generatedCode.addEventListener("drop", function (e) {
   e.preventDefault();
   var data = e.dataTransfer.getData("text/plain");
+  console.log(data);
   var codeToAdd = "";
   switch (data) {
     case "Define variables":
@@ -50,10 +52,10 @@ generatedCode.addEventListener("drop", function (e) {
         operation = prompt("Enter arithmetic operation (+, -, *, /, %):");
       }
       var leftSide1 = prompt(
-        "Enter left side of operation (variable name or number):"
+        "Enter right side of operation (variable name or number):"
       );
       var leftSide2 = prompt(
-        "Enter another left side of operation (variable name or number):"
+        "Enter another right side of operation (variable name or number):"
       );
 
       // Check if variable names on the right side are valid
@@ -85,10 +87,11 @@ generatedCode.addEventListener("drop", function (e) {
 
     case "Function creation":
       var functionName = prompt("Enter function name:");
-      while (!isValidVariableName(functionName)) {
+      if (!isValidVariableName(functionName)) {
         alert("Invalid function name! Please try again.");
-        functionName = prompt("Enter function name:");
+        break;
       }
+      definedFuncNames.push(functionName);
       var numParams;
       do {
         var input = prompt(
@@ -103,13 +106,13 @@ generatedCode.addEventListener("drop", function (e) {
           alert("Invalid parameter name! Please try again.");
           paramName = prompt("Enter name for parameter " + (i + 1) + ":");
         }
-        params += paramName;
+        params += "$" + paramName;
         if (i < numParams - 1) {
           params += ", ";
         }
       }
       var codeToAdd =
-        "function " + functionName + "(" + params + ") {\n\t// Code here\n}";
+        "function " + functionName + "(" + params + ") {\n\t\n\n}";
       break;
 
     case "Loops":
@@ -141,9 +144,7 @@ generatedCode.addEventListener("drop", function (e) {
           if (!validVariable) {
             alert("Variable is not defined !");
             break;
-            value = "'value'";
           }
-
           var operator = prompt(
             "Enter operator (\n1. < \n2.> \n3.<= \n4.>= \n5.== \n6.==="
           );
@@ -210,14 +211,83 @@ generatedCode.addEventListener("drop", function (e) {
       break;
 
     case "Conditional statements":
-      var condition = prompt("Enter condition:");
-      codeToAdd =
-        "if (" +
-        condition +
-        ") {\n\t// Code here\n\n} else {\n\t// Code here\n\n}";
+      var variableName = prompt("Enter variable name:");
+      if (!definedVariableNames.includes(variableName)) {
+        alert("Variable not defined! Please enter a valid variable name.");
+        break;
+      }
+
+      var operator = prompt("Enter operator (<, >, <=, >=, ==, !=):");
+      var value = prompt("Enter value:");
+      if (!isNaN(value)) {
+        value = parseInt(value);
+      }
+
+      var codeIf = "\n\t// Code for if block goes here\n";
+      var codeElse = "\n\t// Code for else block goes here\n";
+
+      codeToAdd = "if ($" + variableName + " " + operator + " ";
+
+      if (isNaN(value)) {
+        codeToAdd += "'" + value + "'";
+      } else {
+        codeToAdd += value;
+      }
+
+      codeToAdd += ") {" + codeIf + "} else {" + codeElse + "}";
       break;
-    default:
-      codeToAdd = "";
+
+    // Code for calling user-defined function
+    case "Call user-defined function":
+      var functionName = prompt("Enter function name:");
+      if (!definedFuncNames.includes(functionName)) {
+        alert("FUNCTION NOT DEFINED !");
+        break;
+      }
+      var numParams = parseInt(prompt("Enter number of parameters:"));
+      var params = "";
+
+      for (var i = 1; i <= numParams; i++) {
+        var paramValue = prompt("Enter parameter " + i + ":");
+        var validVariable = definedVariableNames.includes(loopVar);
+        if (!isNaN(paramValue)) {
+          // Check if input is a number
+          params += paramValue + ",";
+        } else if (validVariable) {
+          // Check if input is a defined variable
+          params += "$" + paramValue + ",";
+          break;
+        } else {
+          // Input is not a valid number or variable
+          alert("Invalid input for parameter " + i);
+          return;
+        }
+      }
+
+      params = params.slice(0, -1); // Remove last comma
+
+      var codeToAdd = functionName + "(" + params + ");";
+      codeToAdd = codeToAdd + ";"; // generate PHP code
+
+      break;
+
+    // CODE FOR PRINTING A STATEMENT
+    case "Print statement":
+      var variableName = prompt(
+        "Enter the statement ( having sting / numbers ):"
+      );
+      codeToAdd = "echo " + "'" + variableName + "'" + ";";
+
+      break;
+
+    // Code for printing a variable
+    case "Print variable":
+      var variableName = prompt("Enter variable name:");
+      if (!definedVariableNames.includes(variableName)) {
+        break;
+      }
+      codeToAdd = "echo $" + variableName + ";";
+
       break;
   }
   codeToAdd = "\n" + codeToAdd + "\n";

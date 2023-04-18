@@ -15,6 +15,10 @@
 			<div class="snippet-item" draggable="true" data-operation="functions">Function creation</div>
 			<div class="snippet-item" draggable="true" data-operation="loops">Loops</div>
 			<div class="snippet-item" draggable="true" data-operation="conditionals">Conditional statements</div>
+			<div class="snippet-item" draggable="true" data-operation="loops">Call user-defined function</div>
+			<div class="snippet-item" draggable="true" data-operation="loops">Print statement</div>
+			<div class="snippet-item" draggable="true" data-operation="loops">Print variable</div>
+
 		</div>
 	</div>
 
