@@ -1,6 +1,19 @@
 body {
   overflow-x: hidden;
 }
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 88%;
+}
+
+.output-area {
+  border: 2px solid lightcoral;
+  border-radius: 5%;
+  background: #ffffff;
+  width: 100%;
+  height: 450px;
+}
 .snippet-container {
   background-color: #f1f1f1;
   border: 1px solid #ddd;
@@ -28,15 +41,15 @@ body {
   cursor: move;
   margin-bottom: 10px;
   padding: 10px;
-  width: 30%;
+  width: 100%;
 }
 
 .output-container {
   background-color: #f1f1f1;
   border: 1px solid #ddd;
   border-radius: 5px;
-  /* margin: 10px; */
   padding: 10px;
+  width: 100%;
 }
 
 .output-header {
@@ -46,6 +59,5 @@ body {
 }
 
 #generated-code {
-  height: 200px;
   width: 100%;
 }

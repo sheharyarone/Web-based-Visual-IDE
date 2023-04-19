@@ -133,7 +133,7 @@ generatedCode.addEventListener("drop", function (e) {
             loopLimit +
             "; $" +
             loopVar +
-            "++) {\n\n\t// Code here\n\n}";
+            "++) {\n\n\t\n\n}";
           break;
 
         case "2":
@@ -191,10 +191,10 @@ generatedCode.addEventListener("drop", function (e) {
               operator +
               " " +
               value +
-              ") {\n\n\t// Code here\n\n}";
+              ") {\n\n\t\n\n}";
           } else if (loopType == "3") {
             codeToAdd =
-              "do {\n\n\t// Code here\n\n} while ($" +
+              "do {\n\n\t\n\n} while ($" +
               loopVar +
               " " +
               operator +
