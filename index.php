@@ -18,6 +18,11 @@
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr.send("generated_code=" + encodeURIComponent(generatedCode));
 		}
+
+		function clearAll() {
+			document.getElementById("generated-code").value = "";
+			document.getElementById("output-container").innerHTML = "";
+		}
 	</script>
 </head>
 
@@ -36,7 +41,7 @@
 
 		</div>
 	</div>
-
+	<button id="clear-btn" type="button" onclick="clearAll()">Clear</button>
 	<div class="output-container">
 		<div class="output-header">Generated Code</div>
 		<textarea id="generated-code"></textarea>
