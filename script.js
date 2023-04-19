@@ -26,7 +26,6 @@ generatedCode.addEventListener("dragover", function (e) {
 generatedCode.addEventListener("drop", function (e) {
   e.preventDefault();
   var data = e.dataTransfer.getData("text/plain");
-  console.log(data);
   var codeToAdd = "";
   switch (data) {
     case "Define variables":
@@ -302,4 +301,5 @@ generatedCode.addEventListener("drop", function (e) {
     codeToAdd +
     currentValue.slice(caretPosition);
   generatedCode.value = newValue;
+  console.log(generatedCode.value);
 });
