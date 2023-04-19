@@ -1,48 +1,51 @@
+body {
+  overflow-x: hidden;
+}
 .snippet-container {
-    background-color: #f1f1f1;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
 }
 
 .snippet-header {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .snippet-group {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .snippet-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: move;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 30%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: move;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 30%;
 }
 
 .output-container {
-    background-color: #f1f1f1;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /* margin: 10px; */
+  padding: 10px;
 }
 
 .output-header {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 #generated-code {
-    height: 200px;
-    width: 100%;
+  height: 200px;
+  width: 100%;
 }

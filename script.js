@@ -278,7 +278,6 @@ generatedCode.addEventListener("drop", function (e) {
       codeToAdd = "echo " + "'" + variableName + "'" + ";";
 
       break;
-
     // Code for printing a variable
     case "Print variable":
       var variableName = prompt("Enter variable name:");
@@ -286,7 +285,25 @@ generatedCode.addEventListener("drop", function (e) {
         break;
       }
       codeToAdd = "echo $" + variableName + ";";
-
+      break;
+    //Code for reading a file
+    case "Read a file":
+      var filePath = prompt("Enter the path: ");
+      // codeToAdd = "$fileContents = file_get_contents(" + filePath + ")";
+      // codeToAdd = "echo $" + "fileContents" + ";";
+      break;
+    // CODE FOR WRITING INTO THE FILE
+    case "Write to a file":
+      var filename = prompt("Enter file name:");
+      var fileContent = prompt("Enter text to write to file:");
+      var codeToAdd = "";
+      codeToAdd += "var filename = prompt('Enter file name:');\n";
+      codeToAdd +=
+        "var fileContent = prompt('Enter text to write to file:');\n";
+      codeToAdd +=
+        'var file = fopen(filename, "w") or die("Unable to open file!");\n';
+      codeToAdd += "fwrite(file, fileContent);\n";
+      codeToAdd += "fclose(file);\n";
       break;
   }
   codeToAdd = "\n" + codeToAdd + "\n";
